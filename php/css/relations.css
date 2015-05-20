@@ -1,0 +1,17 @@
+.relationTable {
+	padding-top: 2.5rem;
+}
+
+.relation {
+	margin-left:auto;
+	margin-right:auto;
+	width: 80%;
+}
+
+table tr.even, table tr.alt, table tr:nth-of-type(even) {
+  background: #EEE;
+}
+
+table {
+  table-layout:fixed;
+}

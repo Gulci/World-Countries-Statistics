@@ -13,3 +13,15 @@
 #ad-hoc {
 	padding-top: 2.5rem;
 }
+
+img
+{
+  display: block;
+  margin: 15px auto;
+}
+
+.center-text {text-align:center;}
+
+.world-map-section {
+	padding-bottom: 2.5rem;
+}

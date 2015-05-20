@@ -6,7 +6,9 @@
     <title>World Countries Statistics</title>
     <link rel="stylesheet" href="css/foundation.css" />
 	<link rel="stylesheet" href="css/custom.css" />
+	
     <script src="js/vendor/modernizr.js"></script>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
   <body>
   
@@ -29,11 +31,17 @@
 	</nav>
     
     <div class="row" id="team-members">
-      <div class="large-12 columns">
+      <div class="large-6 columns">
 		<h3>Team Members:</h3>
 		Bryan Garza<br>
 		Brett Martin<br>
 		Mario Muniz<br>
+      </div>
+	  
+	  <div class="large-6 columns">
+		<h3>Project Info:</h3>
+		<a href="assets/dbms-report.pdf">Project Report.pdf</a><br>
+		<a href="https://github.com/Gulci/World-Countries-Statistics">Source Code</a><br>
       </div>
     </div>
     
@@ -42,37 +50,110 @@
       	
 		<strong>Relations:</strong><br><br>
 		
-		
-		1: <a href="./php/country.php" class="button small">Country</a><br>
-		2: <a href="#" class="button small">Continent</a>
-		
+		<div class="row">
+			<div class="large-4 columns">
+				1: <a href="./php/country.php" class="button tiny">Country</a><br>
+				2: <a href="./php/continent.php" class="button tiny">Continent</a><br>
+				3: <a href="./php/capital.php" class="button tiny">Capital</a><br>
+				4: <a href="./php/ethnic.php" class="button tiny">Ethnic Groups</a><br>
+			</div>
+			<div class="large-4 columns">
+				5: <a href="./php/majorCity.php" class="button tiny">Major City</a><br>
+				6: <a href="./php/organization.php" class="button tiny">Int'l Organization</a><br>
+				7: <a href="./php/resources.php" class="button tiny">Utilizes Natural Resources</a><br>
+				8: <a href="./php/participatesIn.php" class="button tiny">Participates In</a><br>
+			</div>
+			<div class="large-4 columns">
+				9: <a href="./php/locatedInContinent.php" class="button tiny">Located In Continent</a><br>
+				10: <a href="./php/isPresentIn.php" class="button tiny">Is Present In</a><br>
+				11: <a href="./php/isInCountry.php" class="button tiny">Is In Country</a><br>
+				12: <a href="./php/isCapitalOf.php" class="button tiny">Is Capital Of</a><br>
+			</div>
 		
       </div>
     </div>
-	
+		
 	<div class="row" id="queries">
       <div class="large-12 columns">
-      	
-		<strong>Queries:</strong><br>
 		
-		<i>In the following, add an English query description for each of the five queries that you created for Part 6 of your project. Again, clicking a link on the query name should execute the appropriate SQL query and list the tuples that are the answer to that particular query. Again, make sure your output is neatly ordered and column names and data types are evident. The output of the query should appear on a separate page. Near the top of the page, above the tidily presented query output, must be the original SQL for your query.</i>
-
-
+		<br><strong>Queries:</strong><br><br>
 		
+		<div class="large-6 columns">
+			
+			1: <a href="./php/part6-1.php" class="button tiny">Query 1</a><br>
+			<p>Query is supposed to find the average size of major cities, which are also capitals, that have a population less than 1 million.</p>
+			2: <a href="./php/part6-2.php" class="button tiny">Query 2</a><br>
+			<p>Query should find the names of the capital cities of countries in the database that participate in the international group the North Atlantic Treaty Organization.</p>
+			3: <a href="./php/part6-3.php" class="button tiny">Query 3</a><br>
+			<p>A more efficient query to find the names of the capital cities of countries in the database that participate in the international group the North Atlantic Treaty Organization. This has the same purpose as query #2, but is done 
+		without using inefficient subqueries, replacing them with joins.</p>
+			
+		</div>
+		
+		<div class="large-6 columns">
+		
+			4: <a href="./php/part6-4.php" class="button tiny">Query 4</a><br>
+			<p>Purpose of the query is to find the names of capital cities, ordered by descending, located in the North American continent that have been founded after 850 AD.</p>
+			5: <a href="./php/part6-5.php" class="button tiny">Query 5</a><br>
+			<p>Purpose of the query is to find the oldest capital in the continent of Africa. Query returns the capital name, country the capital is present in and the name of the continent.</p>
+			
+		
+		</div>
+ 
       </div>
     </div>
 	
 	<div class="row" id="ad-hoc">
       <div class="large-12 columns">
       	
-		<strong>Ad-hoc Query:</strong><br>
+		<strong>Ad-hoc Query:</strong><br><br>
 		
-		<i>Provide a free-form box and two buttons called "Submit" and "Clear" here. The intent is that the user can enter any arbitrary SQL query in the box and click the submit button. The action should be that you should execute that query on the database and bring up the answers on a separate page, once again, in a neat, orderly fashion. Notice that the input can be any legal SQL query (permissible under your DB system, of course).
-
-The grader will use table names from your own documentation (Project Part 3, etc), so do not change the names of your tables unless you update all of your documentation to match the new names.</i>
+		<form data-abide class="custom" id="form" action="./php/AdHocSubmit.php" enctype="multipart/form-data" method="post">
 		
+			<div class="row">
+              <div class="large-12 columns">
+                <label>Query Input</label>
+                <input type="text" name="query" required>
+                <small class="error">Please input a query.</small>
+              </div>
+            </div>
+		
+		<div class="large-4 columns expand">
+		  <input id="submitButton" type="submit" class="button expand" value="Submit" />
+		</div>
+				
       </div>
     </div>
+	
+	<section class="world-map-section">
+	<div class="row" id="world-map">
+		<div class="large-12 columns">
+		
+			<div class="small-6 small-centered columns">
+			<div class="center-text">
+			<h3>Interactive World Map</h3>
+			Click on a continent for its statistics.
+			</div>
+			</div>
+			
+			<img src="img/world-map.gif" alt="" usemap="#logos" />
+	
+			<map name="logos">
+				<area shape="rect" coords="0,0,250,191" href="./php/north-america.php" title="North America" alt="North America" />
+				<area shape="rect" coords="0,199,257,339" href="./php/south-america.php" title="South America" alt="South America" />
+				<area shape="poly" coords="302,139,339,152,370,197,374,293,275,290,251,190,269,145" href="./php/africa.php" title="Africa" alt="Africa" />
+				<area shape="poly" coords="349,150,363,186,474,239,549,237,614,0,402,0,403,89,369,104" href="./php/asia.php" title="Asia" alt="Asia" />
+				<area shape="poly" coords="514,236,462,236,464,318,519,324,595,270,528,221,523,233" href="./php/australia.php" title="Australia" alt="Australia" />
+				<area shape="poly" coords="403,30,319,0,250,63,279,138,327,138,347,137,361,134,359,122,369,126,371,102,399,92,403,62" href="./php/europe.php" title="Europe" alt="Europe" />
+				<area shape="circle" coords="500,184,32" href="http://wordpress.org/" title="3" alt="3" />
+				
+			</map>
+			
+	</div>
+			
+		</div>
+	</div>
+	</section>
     
     <script src="js/vendor/jquery.js"></script>
     <script src="js/foundation.min.js"></script>

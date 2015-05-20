@@ -28,22 +28,12 @@
 	  </section>
 	</nav>
 	
-	<section class="relationTable">
-	<table class="relation">
-
-    <thead>
-    <tr>
-    <th scope="column" width="75">ID (int)</th>
-    <th scope="column" width="75">GDP (int)</th>
-    <th scope="column" width="400">Name (text)</th>
-    <th scope="column" width="100">Happiness Index (int)</th>
-    <th scope="column" width="150">Type of Government (char)</th>
-    <th scope="column" width="100">Income per Capita (int)</th>
-    <th scope="column" width="100">Population (int)</th>
-    </tr>
-    </thead>
-
-    <tbody>
+	<div class="large-12 columns">
+	
+	<p><strong>Original Query:</strong><br>
+	<textarea readonly><?php echo $_POST['query'];?></textarea></p>
+	
+	<p><strong>Results:</strong><br>
 
 <?php
 
@@ -52,26 +42,68 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-$sql = "SELECT * FROM country ORDER BY countryID";
+$sql = $_POST['query'];
 $result = $mysqli->query($sql);
 
-// http://php.net/manual/en/mysqli-result.fetch-array.php for reference
-while(($row = $result->fetch_array(MYSQL_ASSOC))) {
-
-	echo "<tr>";
-		echo "<td><span class='round label'>" . $row['countryID'] . "</span></td>";
-		echo "<td>" . $row['GDP']."</td>";
-		echo "<td>" . $row['name']."</td>";
-		echo "<td>" . $row['hapIndx']."</td>";
-		echo "<td>" . $row['typeGovt']."</td>";
-		echo "<td>" . $row['incomePerCapita']."</td>";
-		echo "<td>" . $row['population']."</td>";
-		
+if (!$result) {
+	echo "There was an error with your query: <br><br>";
+	printf($mysqli->error);
+	die;
 }
+
+//converts type number to human readable text
+//credit to: http://php.net/manual/en/mysqli-result.fetch-fields.php
+function h_type2txt($type_id)
+{
+    static $types;
+
+    if (!isset($types))
+    {
+        $types = array();
+        $constants = get_defined_constants(true);
+        foreach ($constants['mysqli'] as $c => $n) if (preg_match('/^MYSQLI_TYPE_(.*)/', $c, $m)) $types[$n] = $m[1];
+    }
+
+    return array_key_exists($type_id, $types)? $types[$type_id] : NULL;
+}
+
+if ($mysqli->field_count > 0) {
+
+$fields = $result->fetch_fields();
+//gets field info to populate table head
+
+echo '<table class="results"><thead><tr>';
+
+foreach ($fields as $val){
+	echo '<th scope="column">'; 
+	printf($val->name);
+	echo ' (';
+	printf(h_type2txt($val->type));
+	echo ')';
+	echo '</th>';
+}
+
+echo "</tr></thead>";
+
+while(($row = $result->fetch_row())) {
+	
+	$NumPerRow = count($row);
+	
+	echo "<tr>";
+	for ($i=0;$i<$NumPerRow;$i++){
+		echo "<td>";
+		printf($row[$i]);
+		echo "</td>";
+	}
+	
+}
+
+} else { echo "The query was completed successfully. Result: "; echo $result; }
 
 ?>
 
-	</section>
+	</p>
+	</div>
 
 	<script src="../js/vendor/jquery.js"></script>
     <script src="../js/foundation.min.js"></script>

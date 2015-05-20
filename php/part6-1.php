@@ -27,19 +27,35 @@
 		
 	  </section>
 	</nav>
-	
 	<section class="relationTable">
 	<table class="relation">
 
     <thead>
     <tr>
-    <th scope="column" width="75">ID (int)</th>
-    <th scope="column" width="75">GDP (int)</th>
-    <th scope="column" width="400">Name (text)</th>
-    <th scope="column" width="100">Happiness Index (int)</th>
-    <th scope="column" width="150">Type of Government (char)</th>
-    <th scope="column" width="100">Income per Capita (int)</th>
-    <th scope="column" width="100">Population (int)</th>
+<th scope="column" width="75"><b>--------------------</b></th>
+    </tr>
+    <tr>
+    <th scope="column" width="75">Original SQL Query</th>
+    </tr>
+    <tr>
+<th scope="column" width="75"><b>--------------------</b></th>
+    </tr>
+    <tr>
+	<td>SELECT AVG(Size) as 'Average Size'<br>
+FROM majorCity, capital<br>
+WHERE population < 1000000 AND majorCity.majorCityID = capital.capitalID<br>
+</td>	
+<tr>
+<th scope="column" width="75"><b>--------------------</b></th>
+    </tr>    
+    <tr>
+<th scope="column" width="75"><b>QUERY RESULTS:</b></th>
+    </tr>	
+    <tr>
+<th scope="column" width="75"><b>--------------------</b></th>
+    </tr>	
+    <tr>
+    <th scope="column" width="75">Average Size</th>
     </tr>
     </thead>
 
@@ -52,20 +68,18 @@ if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
 
-$sql = "SELECT * FROM country ORDER BY countryID";
+$sql = "SELECT AVG(Size) as 'Average Size'
+FROM majorCity, capital
+WHERE population < 1000000 AND majorCity.majorCityID = capital.capitalID
+";
 $result = $mysqli->query($sql);
 
 // http://php.net/manual/en/mysqli-result.fetch-array.php for reference
 while(($row = $result->fetch_array(MYSQL_ASSOC))) {
 
 	echo "<tr>";
-		echo "<td><span class='round label'>" . $row['countryID'] . "</span></td>";
-		echo "<td>" . $row['GDP']."</td>";
-		echo "<td>" . $row['name']."</td>";
-		echo "<td>" . $row['hapIndx']."</td>";
-		echo "<td>" . $row['typeGovt']."</td>";
-		echo "<td>" . $row['incomePerCapita']."</td>";
-		echo "<td>" . $row['population']."</td>";
+		echo "<td><span class='round label'>" . $row['Average Size'] . "</span></td>";
+		
 		
 }
 
